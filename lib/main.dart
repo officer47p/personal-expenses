@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import './transaction.dart';
 
@@ -31,7 +32,7 @@ class _MyHomePageState extends State<MyHomePage> {
       title: "Weekly Groceries",
       amount: 16.53,
       date: DateTime.now(),
-    )
+    ),
   ];
 
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text("My App"),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        // mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Container(
@@ -49,6 +50,27 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text("Charts"),
               elevation: 2,
               color: Colors.blue,
+            ),
+          ),
+          Card(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: "Title"),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: "Amount"),
+                  ),
+                  FlatButton(
+                    onPressed: () {},
+                    child: Text("Add Transaction"),
+                    textColor: Colors.purple,
+                  )
+                ],
+              ),
             ),
           ),
           Column(
@@ -70,7 +92,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         borderRadius: BorderRadius.all(Radius.circular(25)),
                       ),
                       child: Text(
-                        tx.amount.toString(),
+                        "\$${tx.amount.toString()}",
                         style: TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 20,
@@ -89,7 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                         ),
                         Text(
-                          tx.date.toString(),
+                          DateFormat.yMMMMd().format(tx.date),
                           style: TextStyle(
                             color: Colors.grey,
                           ),
