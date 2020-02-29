@@ -35,6 +35,9 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
+  TextEditingController titleController = TextEditingController();
+  TextEditingController amountController = TextEditingController();
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -60,12 +63,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: <Widget>[
                   TextField(
                     decoration: InputDecoration(labelText: "Title"),
+                    controller: titleController,
                   ),
                   TextField(
                     decoration: InputDecoration(labelText: "Amount"),
+                    controller: amountController,
                   ),
                   FlatButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      print(titleController.text);
+                      print(amountController.text);
+                    },
                     child: Text("Add Transaction"),
                     textColor: Colors.purple,
                   )
