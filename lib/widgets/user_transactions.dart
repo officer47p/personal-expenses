@@ -5,6 +5,8 @@ import './transaction_list.dart';
 import '../models/transaction.dart';
 
 class UserTransactions extends StatefulWidget {
+  bool showNew;
+  UserTransactions(this.showNew);
   @override
   _UserTransactionsState createState() => _UserTransactionsState();
 }
@@ -41,7 +43,7 @@ class _UserTransactionsState extends State<UserTransactions> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        NewTransaction(addNewTransaction),
+        widget.showNew ? NewTransaction(addNewTransaction) : SizedBox(),
         TransactionList(transactions),
       ],
     );
