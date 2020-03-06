@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import './widgets/user_transactions.dart';
+import 'widgets/new_transaction.dart';
+import 'widgets/transaction_list.dart';
+import 'models/transaction.dart';
 
 void main() => runApp(MyApp());
 
@@ -18,11 +20,40 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  bool showAddNewTransaction = false;
-  void newTransactionToggle() {
+  List<Transaction> transactions = [
+    Transaction(
+      id: "t1",
+      title: "New Shoes",
+      amount: 69.99,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: "t2",
+      title: "Weekly Groceries",
+      amount: 16.53,
+      date: DateTime.now(),
+    ),
+  ];
+
+  void addNewTransaction(String title, double amount) {
+    Transaction newTX = Transaction(
+      title: title,
+      amount: amount,
+      date: DateTime.now(),
+      id: DateTime.now().toString(),
+    );
     setState(() {
-      showAddNewTransaction = !showAddNewTransaction;
+      transactions.add(newTX);
     });
+  }
+
+  void startAddNewTransaction(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext ctx) {
+        return NewTransaction(addNewTransaction);
+      },
+    );
   }
 
   Widget build(BuildContext context) {
@@ -30,12 +61,15 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text("My App"),
         actions: <Widget>[
-          IconButton(icon: Icon(Icons.add), onPressed: newTransactionToggle),
+          IconButton(
+            icon: Icon(Icons.add),
+            onPressed: () => startAddNewTransaction(context),
+          ),
         ],
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
-        onPressed: newTransactionToggle,
+        onPressed: () => startAddNewTransaction(context),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
@@ -50,7 +84,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.blue,
               ),
             ),
-            UserTransactions(showAddNewTransaction),
+            TransactionList(transactions),
           ],
         ),
       ),
