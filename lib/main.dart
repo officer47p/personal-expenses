@@ -8,6 +8,27 @@ void main() => runApp(MyApp());
 class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "Personal Expenses",
+      theme: ThemeData(
+        primaryColor: Colors.purple,
+        accentColor: Colors.amber,
+        fontFamily: "Quicksand",
+        textTheme: TextTheme(
+          title: TextStyle(
+              fontFamily: "Quicksand",
+              fontWeight: FontWeight.bold,
+              fontSize: 18),
+        ),
+        appBarTheme: ThemeData.light().appBarTheme.copyWith(
+              textTheme: ThemeData.light().textTheme.copyWith(
+                    title: TextStyle(
+                      fontFamily: "OpenSans",
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),
+                  ),
+            ),
+      ),
       home: MyHomePage(),
     );
   }
@@ -59,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("My App"),
+        title: Text("Personal Expenses"),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
