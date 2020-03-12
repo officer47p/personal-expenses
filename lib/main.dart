@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:personal_expenses/widgets/chart.dart';
 import 'widgets/new_transaction.dart';
 import 'widgets/transaction_list.dart';
 import 'models/transaction.dart';
+import 'widgets/chart.dart';
 
 void main() => runApp(MyApp());
 
@@ -46,13 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
     //   id: "t1",
     //   title: "New Shoes",
     //   amount: 69.99,
-    //   date: DateTime.now(),
+    //   date: DateTime.now().subtract(Duration(days: 4)),
     // ),
     // Transaction(
     //   id: "t2",
     //   title: "Weekly Groceries",
     //   amount: 16.53,
-    //   date: DateTime.now(),
+    //   date: DateTime.now().subtract(Duration(days: 7)),
     // ),
   ];
 
@@ -77,6 +79,13 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  List<Transaction> get latestTransactions {
+    return transactions.where((transaction) {
+      // print(DateTime.now().difference(transaction.date).inDays);
+      return DateTime.now().difference(transaction.date).inDays < 7;
+    }).toList();
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -97,14 +106,15 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            Container(
-              width: double.infinity,
-              child: Card(
-                child: Text("Charts"),
-                elevation: 2,
-                color: Colors.blue,
-              ),
-            ),
+            // Container(
+            //   width: double.infinity,
+            //   child: Card(
+            //     child: Text("Charts"),
+            //     elevation: 2,
+            //     color: Colors.blue,
+            //   ),
+            // ),
+            Chart(latestTransactions),
             TransactionList(transactions),
           ],
         ),
