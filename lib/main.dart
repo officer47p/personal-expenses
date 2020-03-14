@@ -12,25 +12,29 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: "Personal Expenses",
       theme: ThemeData(
-        primaryColor: Colors.purple,
-        accentColor: Colors.amber,
-        fontFamily: "Quicksand",
-        textTheme: TextTheme(
-          title: TextStyle(
-              fontFamily: "Quicksand",
-              fontWeight: FontWeight.bold,
-              fontSize: 18),
-        ),
-        appBarTheme: ThemeData.light().appBarTheme.copyWith(
-              textTheme: ThemeData.light().textTheme.copyWith(
-                    title: TextStyle(
-                      fontFamily: "OpenSans",
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+          // primaryColor: Colors.purple,
+          // accentColor: Colors.amber,
+          primarySwatch: Colors.purple,
+          fontFamily: "Quicksand",
+          textTheme: TextTheme(
+            title: TextStyle(
+                fontFamily: "Quicksand",
+                fontWeight: FontWeight.bold,
+                fontSize: 18),
+          ),
+          appBarTheme: ThemeData.light().appBarTheme.copyWith(
+                textTheme: ThemeData.light().textTheme.copyWith(
+                      title: TextStyle(
+                        fontFamily: "OpenSans",
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-            ),
-      ),
+              ),
+          floatingActionButtonTheme:
+              ThemeData.light().floatingActionButtonTheme.copyWith(
+                    backgroundColor: Colors.amber,
+                  )),
       home: MyHomePage(),
     );
   }
@@ -44,18 +48,18 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   List<Transaction> transactions = [
-    Transaction(
-      id: "t1",
-      title: "New Shoes",
-      amount: 69.99,
-      date: DateTime.now().subtract(Duration(days: 4)),
-    ),
-    Transaction(
-      id: "t2",
-      title: "Weekly Groceries",
-      amount: 16.53,
-      date: DateTime.now().subtract(Duration(days: 6)),
-    ),
+    // Transaction(
+    //   id: "t1",
+    //   title: "New Shoes",
+    //   amount: 69.99,
+    //   date: DateTime.now().subtract(Duration(days: 4)),
+    // ),
+    // Transaction(
+    //   id: "t2",
+    //   title: "Weekly Groceries",
+    //   amount: 16.53,
+    //   date: DateTime.now().subtract(Duration(days: 6)),
+    // ),
   ];
 
   void addNewTransaction(String title, double amount) {
