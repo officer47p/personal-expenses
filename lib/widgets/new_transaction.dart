@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewTransaction extends StatefulWidget {
   final Function addNewTransaction;
@@ -11,8 +12,8 @@ class NewTransaction extends StatefulWidget {
 
 class _NewTransactionState extends State<NewTransaction> {
   final TextEditingController titleController = TextEditingController();
-
   final TextEditingController amountController = TextEditingController();
+  DateTime chosenDate;
 
   void submitNewTransaction() {
     String title = titleController.text;
@@ -25,6 +26,17 @@ class _NewTransactionState extends State<NewTransaction> {
       amount,
     );
     Navigator.of(context).pop();
+  }
+
+  void presentDatePicker() async {
+    var datePickerValue = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(2019),
+      lastDate: DateTime.now(),
+    );
+    chosenDate = datePickerValue == null ? null : datePickerValue;
+    setState(() {});
   }
 
   @override
@@ -46,10 +58,33 @@ class _NewTransactionState extends State<NewTransaction> {
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitNewTransaction(),
             ),
-            FlatButton(
+            Container(
+              height: 80,
+              child: Row(
+                children: <Widget>[
+                  Text(
+                    chosenDate == null
+                        ? "No Date Chosen!"
+                        : DateFormat.yMMMd().format(chosenDate),
+                  ),
+                  FlatButton(
+                    onPressed: presentDatePicker,
+                    child: Text(
+                      "Choose Date",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            RaisedButton(
+              color: Theme.of(context).primaryColor,
               onPressed: () => submitNewTransaction(),
               child: Text("Add Transaction"),
-              textColor: Colors.purple,
+              textColor: Theme.of(context).textTheme.button.color,
             )
           ],
         ),
