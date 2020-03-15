@@ -87,6 +87,14 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void deleteTransaction(String id) {
+    setState(() {
+      transactions.removeWhere((tx) {
+        return tx.id == id;
+      });
+    });
+  }
+
   List<Transaction> get latestTransactions {
     return transactions.where((transaction) {
       // print(DateTime.now().difference(transaction.date).inDays);
@@ -123,7 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
             //   ),
             // ),
             Chart(latestTransactions),
-            TransactionList(transactions),
+            TransactionList(transactions, deleteTransaction),
           ],
         ),
       ),
