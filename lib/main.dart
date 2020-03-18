@@ -5,7 +5,12 @@ import 'widgets/transaction_list.dart';
 import 'models/transaction.dart';
 import 'widgets/chart.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations(
+  //     [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+  runApp(MyApp());
+}
 
 class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
@@ -65,6 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
     //   date: DateTime.now().subtract(Duration(days: 6)),
     // ),
   ];
+  bool showChart = false;
 
   void addNewTransaction(String title, double amount, DateTime chosenDate) {
     Transaction newTX = Transaction(
@@ -103,6 +109,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget build(BuildContext context) {
+    final inLandscape =
+        MediaQuery.of(context).orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text("Personal Expenses"),
       actions: <Widget>[
@@ -118,7 +126,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Icon(Icons.add),
         onPressed: () => startAddNewTransaction(context),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButtonLocation: inLandscape
+          ? FloatingActionButtonLocation.endFloat
+          : FloatingActionButtonLocation.centerFloat,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -131,20 +141,68 @@ class _MyHomePageState extends State<MyHomePage> {
             //     color: Colors.blue,
             //   ),
             // ),
-            Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.3,
-              child: Chart(latestTransactions),
-            ),
-            Container(
-              height: (MediaQuery.of(context).size.height -
-                      appBar.preferredSize.height -
-                      MediaQuery.of(context).padding.top) *
-                  0.7,
-              child: TransactionList(transactions, deleteTransaction),
-            ),
+            if (inLandscape)
+              Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.2,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    Text("Show Chart"),
+                    Switch(
+                        value: showChart,
+                        onChanged: (val) {
+                          setState(() {
+                            showChart = val;
+                          });
+                        }),
+                  ],
+                ),
+              ),
+            if (!inLandscape)
+              Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.3,
+                child: Chart(
+                  latestTransactions,
+                ),
+              ),
+            if (!inLandscape)
+              Container(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.7,
+                child: TransactionList(
+                  transactions,
+                  deleteTransaction,
+                ),
+              ),
+            if (inLandscape)
+              showChart
+                  ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.8,
+                      child: Chart(
+                        latestTransactions,
+                      ),
+                    )
+                  : Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.8,
+                      child: TransactionList(
+                        transactions,
+                        deleteTransaction,
+                      ),
+                    ),
           ],
         ),
       ),

@@ -11,25 +11,40 @@ class TransactionList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 600,
+      // height: 600,
       child: transactions.isEmpty
-          ? Column(
-              children: <Widget>[
-                Text(
-                  "No transactions yet...",
-                  style: Theme.of(context).textTheme.title,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  height: 200,
-                  child: Image.asset(
-                    "assets/images/waiting.png",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ],
+          ? LayoutBuilder(
+              builder: (ctx, constraints) {
+                return Column(
+                  children: <Widget>[
+                    Container(
+                      height: constraints.maxHeight * 0.15,
+                      child: Padding(
+                        padding: MediaQuery.of(context).orientation ==
+                                Orientation.portrait
+                            ? EdgeInsets.all(constraints.maxHeight * 0.025)
+                            : EdgeInsets.all(0.0),
+                        child: FittedBox(
+                          child: Text(
+                            "No transactions yet...",
+                            style: Theme.of(context).textTheme.title,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: constraints.maxHeight * 0.05,
+                    ),
+                    Container(
+                      height: constraints.maxHeight * 0.8,
+                      child: Image.asset(
+                        "assets/images/waiting.png",
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  ],
+                );
+              },
             )
           : ListView.builder(
               itemBuilder: (BuildContext context, i) {
