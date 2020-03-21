@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/transaction.dart';
-import 'package:intl/intl.dart';
+import './transaction_item.dart';
 
 class TransactionList extends StatelessWidget {
   final Function deleteTransaction;
@@ -48,48 +48,9 @@ class TransactionList extends StatelessWidget {
             )
           : ListView.builder(
               itemBuilder: (BuildContext context, i) {
-                return Card(
-                  elevation: 5,
-                  margin: EdgeInsets.symmetric(
-                    vertical: 8,
-                    horizontal: 5,
-                  ),
-                  child: ListTile(
-                    leading: CircleAvatar(
-                      radius: 30,
-                      child: Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: FittedBox(
-                          child:
-                              Text("\$${transactions[i].amount.toStringAsFixed(
-                                    2,
-                                  )}"),
-                        ),
-                      ),
-                    ),
-                    title: Text(
-                      transactions[i].title,
-                      style: Theme.of(context).textTheme.title,
-                    ),
-                    subtitle: Text(
-                      DateFormat.yMMMMd().format(transactions[i].date),
-                    ),
-                    trailing: MediaQuery.of(context).size.width > 400
-                        ? FlatButton.icon(
-                            onPressed: () =>
-                                deleteTransaction(transactions[i].id),
-                            icon: Icon(Icons.delete),
-                            label: Text("DELETE"),
-                            textColor: Theme.of(context).errorColor,
-                          )
-                        : IconButton(
-                            icon: Icon(Icons.delete),
-                            color: Theme.of(context).errorColor,
-                            onPressed: () =>
-                                deleteTransaction(transactions[i].id),
-                          ),
-                  ),
-                );
+                return TransactionItem(
+                    transaction: transactions[i],
+                    deleteTransaction: deleteTransaction);
                 // return Card(
                 //   child: Row(
                 //     children: <Widget>[

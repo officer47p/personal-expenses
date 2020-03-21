@@ -110,8 +110,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget build(BuildContext context) {
-    final inLandscape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    final inLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
       title: Text("Personal Expenses"),
       actions: <Widget>[
@@ -144,9 +144,9 @@ class _MyHomePageState extends State<MyHomePage> {
             // ),
             if (inLandscape)
               Container(
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
+                        mediaQuery.padding.top) *
                     0.2,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -164,9 +164,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             if (!inLandscape)
               Container(
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
+                        mediaQuery.padding.top) *
                     0.3,
                 child: Chart(
                   latestTransactions,
@@ -174,9 +174,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             if (!inLandscape)
               Container(
-                height: (MediaQuery.of(context).size.height -
+                height: (mediaQuery.size.height -
                         appBar.preferredSize.height -
-                        MediaQuery.of(context).padding.top) *
+                        mediaQuery.padding.top) *
                     0.7,
                 child: TransactionList(
                   transactions,
@@ -186,18 +186,18 @@ class _MyHomePageState extends State<MyHomePage> {
             if (inLandscape)
               showChart
                   ? Container(
-                      height: (MediaQuery.of(context).size.height -
+                      height: (mediaQuery.size.height -
                               appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
+                              mediaQuery.padding.top) *
                           0.8,
                       child: Chart(
                         latestTransactions,
                       ),
                     )
                   : Container(
-                      height: (MediaQuery.of(context).size.height -
+                      height: (mediaQuery.size.height -
                               appBar.preferredSize.height -
-                              MediaQuery.of(context).padding.top) *
+                              mediaQuery.padding.top) *
                           0.8,
                       child: TransactionList(
                         transactions,
