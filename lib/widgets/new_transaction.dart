@@ -59,12 +59,12 @@ class _NewTransactionState extends State<NewTransaction> {
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
               TextField(
-                decoration: InputDecoration(labelText: "Title"),
+                decoration: const InputDecoration(labelText: "Title"),
                 controller: titleController,
                 onSubmitted: (_) => submitNewTransaction(),
               ),
               TextField(
-                decoration: InputDecoration(labelText: "Amount"),
+                decoration: const InputDecoration(labelText: "Amount"),
                 controller: amountController,
                 keyboardType: TextInputType.number,
                 onSubmitted: (_) => submitNewTransaction(),
@@ -94,7 +94,7 @@ class _NewTransactionState extends State<NewTransaction> {
               RaisedButton(
                 color: Theme.of(context).primaryColor,
                 onPressed: () => submitNewTransaction(),
-                child: Text("Add Transaction"),
+                child: const Text("Add Transaction"),
                 textColor: Theme.of(context).textTheme.button.color,
               )
             ],

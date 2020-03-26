@@ -113,10 +113,10 @@ class _MyHomePageState extends State<MyHomePage> {
     final mediaQuery = MediaQuery.of(context);
     final inLandscape = mediaQuery.orientation == Orientation.landscape;
     final appBar = AppBar(
-      title: Text("Personal Expenses"),
+      title: const Text("Personal Expenses"),
       actions: <Widget>[
         IconButton(
-          icon: Icon(Icons.add),
+          icon: const Icon(Icons.add),
           onPressed: () => startAddNewTransaction(context),
         ),
       ],
@@ -124,7 +124,7 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: appBar,
       floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.add),
+        child: const Icon(Icons.add),
         onPressed: () => startAddNewTransaction(context),
       ),
       floatingActionButtonLocation: inLandscape
@@ -151,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text("Show Chart"),
+                    const Text("Show Chart"),
                     Switch(
                         value: showChart,
                         onChanged: (val) {

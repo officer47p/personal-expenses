@@ -23,7 +23,7 @@ class TransactionList extends StatelessWidget {
                         padding: MediaQuery.of(context).orientation ==
                                 Orientation.portrait
                             ? EdgeInsets.all(constraints.maxHeight * 0.025)
-                            : EdgeInsets.all(0.0),
+                            : const EdgeInsets.all(0.0),
                         child: FittedBox(
                           child: Text(
                             "No transactions yet...",
@@ -49,8 +49,9 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (BuildContext context, i) {
                 return TransactionItem(
-                    transaction: transactions[i],
-                    deleteTransaction: deleteTransaction);
+                  transaction: transactions[i],
+                  deleteTransaction: deleteTransaction,
+                );
                 // return Card(
                 //   child: Row(
                 //     children: <Widget>[
