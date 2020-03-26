@@ -109,6 +109,74 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
+  List<Widget> buildLandscapeContent(MediaQueryData mediaQuery, AppBar appBar) {
+    return [
+      Container(
+        height: (mediaQuery.size.height -
+                appBar.preferredSize.height -
+                mediaQuery.padding.top) *
+            0.2,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            const Text("Show Chart"),
+            Switch(
+                value: showChart,
+                onChanged: (val) {
+                  setState(() {
+                    showChart = val;
+                  });
+                }),
+          ],
+        ),
+      ),
+      showChart
+          ? Container(
+              height: (mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.8,
+              child: Chart(
+                latestTransactions,
+              ),
+            )
+          : Container(
+              height: (mediaQuery.size.height -
+                      appBar.preferredSize.height -
+                      mediaQuery.padding.top) *
+                  0.8,
+              child: TransactionList(
+                transactions,
+                deleteTransaction,
+              ),
+            ),
+    ];
+  }
+
+  List<Widget> buildPortraitContent(MediaQueryData mediaQuery, AppBar appBar) {
+    return [
+      Container(
+        height: (mediaQuery.size.height -
+                appBar.preferredSize.height -
+                mediaQuery.padding.top) *
+            0.3,
+        child: Chart(
+          latestTransactions,
+        ),
+      ),
+      Container(
+        height: (mediaQuery.size.height -
+                appBar.preferredSize.height -
+                mediaQuery.padding.top) *
+            0.7,
+        child: TransactionList(
+          transactions,
+          deleteTransaction,
+        ),
+      ),
+    ];
+  }
+
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final inLandscape = mediaQuery.orientation == Orientation.landscape;
@@ -134,76 +202,8 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
-            // Container(
-            //   width: double.infinity,
-            //   child: Card(
-            //     child: Text("Charts"),
-            //     elevation: 2,
-            //     color: Colors.blue,
-            //   ),
-            // ),
-            if (inLandscape)
-              Container(
-                height: (mediaQuery.size.height -
-                        appBar.preferredSize.height -
-                        mediaQuery.padding.top) *
-                    0.2,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    const Text("Show Chart"),
-                    Switch(
-                        value: showChart,
-                        onChanged: (val) {
-                          setState(() {
-                            showChart = val;
-                          });
-                        }),
-                  ],
-                ),
-              ),
-            if (!inLandscape)
-              Container(
-                height: (mediaQuery.size.height -
-                        appBar.preferredSize.height -
-                        mediaQuery.padding.top) *
-                    0.3,
-                child: Chart(
-                  latestTransactions,
-                ),
-              ),
-            if (!inLandscape)
-              Container(
-                height: (mediaQuery.size.height -
-                        appBar.preferredSize.height -
-                        mediaQuery.padding.top) *
-                    0.7,
-                child: TransactionList(
-                  transactions,
-                  deleteTransaction,
-                ),
-              ),
-            if (inLandscape)
-              showChart
-                  ? Container(
-                      height: (mediaQuery.size.height -
-                              appBar.preferredSize.height -
-                              mediaQuery.padding.top) *
-                          0.8,
-                      child: Chart(
-                        latestTransactions,
-                      ),
-                    )
-                  : Container(
-                      height: (mediaQuery.size.height -
-                              appBar.preferredSize.height -
-                              mediaQuery.padding.top) *
-                          0.8,
-                      child: TransactionList(
-                        transactions,
-                        deleteTransaction,
-                      ),
-                    ),
+            if (inLandscape) ...buildLandscapeContent(mediaQuery, appBar),
+            if (!inLandscape) ...buildPortraitContent(mediaQuery, appBar),
           ],
         ),
       ),
